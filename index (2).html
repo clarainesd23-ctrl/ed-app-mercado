@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi Mercado</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fdf6f9;--card:#fff;--tx:#3b3340;--mut:#8a7f90;--ac:#b98ad6;--ac2:#f3e3f7;--bd:#eadff0;--ok:#bfe5d0;--warn:#ffd9b8;--bad:#f7b4b4;--c0:#fbc4d9;--c1:#c4dcf8;--c2:#c8ecd0;--c3:#fde5a8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#231e28;--card:#2e2734;--tx:#f1e9f5;--mut:#a99fb0;--ac:#c9a2e3;--ac2:#46385a;--bd:#433a4a;--ok:#2f5443;--warn:#6b4a2b;--bad:#6b2f2f;--c0:#7a3a54;--c1:#35557a;--c2:#3a6a4a;--c3:#7a6330}}
+:root[data-theme="dark"]{--bg:#231e28;--card:#2e2734;--tx:#f1e9f5;--mut:#a99fb0;--ac:#c9a2e3;--ac2:#46385a;--bd:#433a4a;--ok:#2f5443;--warn:#6b4a2b;--bad:#6b2f2f;--c0:#7a3a54;--c1:#35557a;--c2:#3a6a4a;--c3:#7a6330}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0 auto;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:14px;max-width:640px}
+h1{font-size:1.4rem;margin:4px 0 10px}
+button,input,select{font:inherit;color:var(--tx)}
+input,select{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:6px;min-width:0}
+.tabs,.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.tab,.chip{flex:0 0 auto;border:1px solid var(--bd);background:var(--card);padding:8px 14px;border-radius:20px;cursor:pointer}
+.chip{padding:5px 12px;font-size:.85rem}
+.tab{background:#e6d2f5;background:color-mix(in srgb,var(--ac) 38%,var(--card));border-color:var(--ac);font-weight:600}
+.on{background:var(--ac)!important;color:#fff!important;border-color:var(--ac)!important}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:8px 14px;cursor:pointer}
+.ghost,.x{background:none;border:0;color:var(--mut);cursor:pointer}
+.row{display:flex;gap:6px;align-items:center;margin:8px 0}
+.msg{font-size:.82rem;color:var(--mut);min-height:1.2em;margin:4px 0}
+.cat{background:var(--card);border:1px solid var(--bd);border-radius:16px;margin:10px 0;overflow:hidden}
+.ch{display:flex;align-items:center;gap:6px;background:var(--ac2);padding:6px 10px}
+.ch input{flex:1;font-weight:700;background:transparent;border:0}
+.cnt{font-size:.78rem;color:var(--mut)}
+.it{display:flex;align-items:center;gap:8px;padding:6px 12px;border-top:1px solid var(--bd)}
+.it input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);flex:0 0 auto}
+.it .t{flex:1;border:0;background:transparent;border-bottom:1px dashed transparent;border-radius:0}
+.it .t:focus{outline:0;border-bottom-color:var(--ac)}
+.it.done .t{text-decoration:line-through;color:var(--mut)}
+.q{width:52px;text-align:center;font-size:.85rem}
+.adds{display:flex;border-top:1px solid var(--bd)}
+.adds button{flex:1;background:none;border:0;color:var(--ac);padding:9px;cursor:pointer}
+.wrap{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:.8rem;background:var(--card)}
+th,td{border:1px solid var(--bd);padding:4px 6px;text-align:left;white-space:nowrap}
+th{background:var(--ac2);white-space:normal}.cg{background:var(--ac2);font-weight:700}
+td input.n{width:48px;text-align:center}td select{max-width:72px}
+.fin{text-align:center;font-weight:700}
+.pill{display:inline-block;border-radius:12px;padding:3px 10px;font-size:.78rem}
+.ok{background:var(--ok)}.warn{background:var(--warn)}.bad{background:var(--bad)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;margin:8px 0;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.empty{color:var(--mut);text-align:center;padding:24px 0}
+.dot{width:28px;height:28px;border-radius:6px;border:1.5px solid var(--mut);background:transparent;flex:0 0 auto;cursor:pointer;padding:0;font-size:13px;font-weight:600}
+.s0{background:var(--c0)}.s1{background:var(--c1)}.s2{background:var(--c2)}.s3{background:var(--c3)}
+.sel{outline:2px solid var(--tx)}
+:root[data-tema="bn"]{color-scheme:light;--bg:#fff;--card:#fff;--tx:#111;--mut:#666;--ac:#111;--ac2:#f2f2f2;--bd:#d9d9d9;--ok:#f2f2f2;--warn:#e6e6e6;--bad:#d0d0d0;--c0:#bfe3f5;--c1:#aeeadf;--c2:#f8c4d8;--c3:#ffcfa8}
+:root[data-tema="aqua"]{color-scheme:light;--bg:#f3fbf9;--card:#fff;--tx:#1f3a35;--mut:#6b8a84;--ac:#2f9c89;--ac2:#d9f3ee;--bd:#cfe9e3;--ok:#bfe8d6;--warn:#ffe3b8;--bad:#f7bcbc;--c0:#f8c4d8;--c1:#bfe3f5;--c2:#ffcfa8;--c3:#fde5a8}
+:root[data-tema="celeste"]{color-scheme:light;--bg:#f3f9fe;--card:#fff;--tx:#1f3346;--mut:#6a8298;--ac:#3b8fc9;--ac2:#dcecf9;--bd:#cfe2f2;--ok:#bfe8d6;--warn:#ffe3b8;--bad:#f7bcbc;--c0:#f8c4d8;--c1:#aeeadf;--c2:#ffcfa8;--c3:#fde5a8}
+:root[data-tema="rosa"]{color-scheme:light;--bg:#fff6f9;--card:#fff;--tx:#43303a;--mut:#9a8190;--ac:#cc5f8f;--ac2:#fde1ec;--bd:#f5d9e5;--ok:#bfe8d6;--warn:#ffe3b8;--bad:#f7bcbc;--c0:#bfe3f5;--c1:#aeeadf;--c2:#ffcfa8;--c3:#fde5a8}
+</style>
+</head>
+<body>
+<h1>🛒 Mi Mercado</h1>
+<div class="row"><button class="btn" id="mic" onclick="micAll()" style="flex:1;font-size:1.15rem;padding:12px 14px">🎤 Toca y habla</button></div>
+<div class="row" id="sw"></div>
+<div class="tabs" id="tabs"></div>
+<div class="msg" id="vm"></div>
+<div id="app"></div>
+<script>
+const KEY='miMercado.v2',DAY=864e5;
+const D=[
+['🥩 Carnes','Pollo|Carne de res|Carne molida|Cerdo|Pescado|Camarones|Mariscos|Atún|Salchichas|Jamón'],
+['🥛 Lácteos','Leche|Queso|Yogur|Mantequilla|Huevos|Crema de leche|Queso crema|Kumis|Cuajada|Leche deslactosada'],
+['🥕 Vegetales','Tomate|Cebolla|Zanahoria|Habichuela|Arveja|Lechuga|Pimentón|Ajo|Pepino|Brócoli'],
+['🍎 Frutas','Naranjas|Bananas|Sandía|Papaya|Piña|Manzanas|Uvas|Peras|Mango|Fresas'],
+['🍚 Almidones','Papa|Yuca|Plátano|Arroz|Pasta|Pan|Arepas|Avena|Lentejas|Frijoles'],
+['🥫 Despensa','Aceite|Sal|Azúcar|Café|Salsas|Atún enlatado',1],
+['🥤 Bebidas','Agua|Jugos|Gaseosas|Té|Cerveza|Leche de almendras',1],
+['🍞 Panadería y snacks','Galletas|Cereal|Pan tajado|Mecato|Chocolate|Granola',1],
+['🧊 Congelados','Vegetales congelados|Helado|Pizza|Nuggets|Frutas congeladas|Hamburguesas',1],
+['🧼 Aseo personal','Champú|Jabón de baño|Crema dental|Desodorante|Cepillo de dientes|Papel higiénico',1],
+['🐶 Mascotas','Comida|Arena|Premios|Antipulgas',1],
+['🧴 Limpieza','Detergente|Jabón de loza|Suavizante|Cloro|Desinfectante|Limpiavidrios|Esponjas|Toallas de cocina|Bolsas de basura']];
+const mk=t=>({t,c:0,q:'',ini:'',buy:'',use:'',dur:0,date:0,s:-1});
+let C=D.map(d=>({n:d[0],h:d[2]||0,i:d[1].split('|').map(mk)}));
+let ST=['Supermercado 1','Supermercado 2','Supermercado 3','Supermercado 4'];
+let S={tab:'lista',f:-1,ed:0};
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&r.C){C=r.C;ST=r.ST||ST}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({C,ST}))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id);
+function calc(x){
+  const i=+x.ini||0,b=+x.buy||0,u=+x.use||0;
+  if(!i&&!b&&!u)return '';
+  return Math.round((i+b-u)*100)/100;
+}
+function status(x){
+  const f=calc(x);let left=null;
+  if(x.dur>0&&x.date)left=Math.ceil(x.dur-(Date.now()-x.date)/DAY);
+  if(f!==''&&f<=0)return{c:'bad',t:'Se acabó',a:1};
+  if(left!==null&&left<=2)return{c:'warn',t:'Se está acabando · '+left+' d',a:1};
+  if(left!==null)return{c:'ok',t:'Dura ~'+left+' d más',a:0};
+  return{c:'',t:'',a:0};
+}
+function alerts(){const l=[];C.forEach((c,a)=>c.i.forEach((x,b)=>{if(x.t&&status(x).a)l.push([c,x])}));return l}
+const vis=x=>S.f===-1||x.s===(S.f===-2?-1:S.f);
+function render(){
+  const n=alerts().length;
+  $('tabs').innerHTML=[['lista','📝 Lista'],['inv','📦 Inventario'],['al','⚠️ Se acaban'+(n?' ('+n+')':'')],['ay','❓ Ayuda']].map(t=>`<button class="tab ${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join('');
+  $('app').innerHTML=S.tab==='lista'?vLista():S.tab==='inv'?vInv():S.tab==='ay'?vAy():vAl();
+}
+function vLista(){
+  let o=`<div class="chips"><button class="chip ${S.f===-1?'on':''}" onclick="S.f=-1;S.ed=0;render()">Todos</button>`+ST.map((s,i)=>`<button class="chip s${i} ${S.f===i?'sel':''}" onclick="S.f=${i};S.ed=0;render()">${esc(s)}</button>`).join('')+`<button class="chip ${S.f===-2?'on':''}" onclick="S.f=-2;S.ed=0;render()">Sin lugar</button></div>`;
+  if(S.f>=0)o+=S.ed?`<div class="row"><input id="rn" value="${esc(ST[S.f])}" style="flex:1"><button class="btn" onclick="ST[S.f]=$('rn').value.trim()||ST[S.f];S.ed=0;save();render()">Guardar</button></div>`:`<div class="row"><button class="ghost" onclick="S.ed=1;render()">✏️ Cambiar nombre de este lugar</button></div>`;
+  o+=`<div class="msg">Toca el cuadrito de cada producto para conectarlo con su supermercado (1, 2, 3 o 4).</div><div class="row"><button class="btn" onclick="C.push({n:'Nueva categoría',h:0,i:[mk('')]});save();render()">+ Categoría</button></div>`;
+  return o+C.map((c,a)=>{
+    const d=c.i.filter(x=>x.c).length;
+    let h=`<div class="cat"><div class="ch"><button class="x" onclick="C[${a}].h=!C[${a}].h;save();render()">${c.h?'▸':'▾'}</button><input value="${esc(c.n)}" onchange="C[${a}].n=this.value;save()"><span class="cnt">${c.i.length}</span><button class="x" onclick="C.splice(${a},1);save();render()">🗑</button></div>`;
+    if(!c.h)h+=c.i.map((x,b)=>vis(x)?`<div class="it ${x.c?'done':''}"><button class="dot ${x.s>=0?'s'+x.s:''}" title="Supermercado" onclick="cyc(${a},${b})">${x.s>=0?x.s+1:''}</button><input class="t" value="${esc(x.t)}" onchange="C[${a}].i[${b}].t=this.value;save()"><input class="q" placeholder="cant." value="${esc(x.q)}" onchange="C[${a}].i[${b}].q=this.value;save()"><button class="x" onclick="C[${a}].i.splice(${b},1);save();render()">✕</button></div>`:'').join('')+`<div class="adds"><button onclick="addIt(${a})">+ Renglón</button></div>`;
+    return h+`</div>`}).join('');
+}
+function vInv(){
+  let o=`<div class="row"><button class="btn" onclick="copyTable()">📋 Copiar para Excel</button></div><div class="msg">Para dictar usa el 🎤 de arriba. Ejemplo: “Atún, compré 3 latas, inicio 1, gasté 2”. Inventario final = Inicio + Compras − Usado. Se calcula solo.</div><div class="wrap"><table><tr><th>Producto</th><th>Inicio</th><th>Duración (días)</th><th>Compras (+)</th><th>Usado (−)</th><th>Inventario final</th><th>Lugar</th></tr>`;
+  C.forEach((c,a)=>{
+    o+=`<tr><td class="cg" colspan="7">${esc(c.n)}</td></tr>`;
+    c.i.forEach((x,b)=>{if(!x.t)return;const st=status(x);
+      o+=`<tr><td style="white-space:normal;min-width:84px">${esc(x.t)}${st.a?`<br><span class="pill ${st.c}">${st.t}</span>`:''}</td><td><input class="n" type="number" step="any" inputmode="decimal" value="${esc(x.ini)}" onchange="up(${a},${b},'ini',this.value)"></td><td><input class="n" type="number" step="any" inputmode="decimal" value="${x.dur||''}" onchange="up(${a},${b},'dur',this.value)"></td><td><input class="n" type="number" step="any" inputmode="decimal" value="${esc(x.buy)}" onchange="up(${a},${b},'buy',this.value)"></td><td><input class="n" type="number" step="any" inputmode="decimal" value="${esc(x.use||'')}" onchange="up(${a},${b},'use',this.value)"></td><td class="fin">${calc(x)}</td><td><select onchange="up(${a},${b},'s',this.value)"><option value="-1">—</option>${ST.map((s,i)=>`<option value="${i}" ${x.s===i?'selected':''}>${esc(s)}</option>`).join('')}</select></td></tr>`});
+  });
+  return o+`</table></div>`;
+}
+function vAl(){
+  const l=alerts();
+  return l.length?l.map(([c,x])=>{const st=status(x);return `<div class="card"><div><b>${esc(x.t)}</b><div class="msg">${esc(c.n)} · ${x.s>=0?esc(ST[x.s]):'cualquier lugar'} · Final: ${calc(x)}</div></div><span class="pill ${st.c}">${st.t}</span></div>`}).join(''):'<div class="empty">Nada se está acabando 🎉</div>';
+}
+function vAy(){
+  const P=[
+['1. Escoge tu color','Arriba, junto a 🎨 Color, toca uno de los 5 círculos: lila, rosado, blanco y negro, verde agua o celeste. La app cambia de color y se acuerda de tu elección.'],
+['2. Elige la columna que vas a trabajar','Toca una pestaña: 📝 Lista, 📦 Inventario, ⚠️ Se acaban o ❓ Ayuda. O toca el 🎤 de arriba y di una de estas 4 palabras clave: LISTA, INVENTARIO, SE ACABAN o AYUDA.'],
+['3. Cambia los nombres y colores de los supermercados','En 📝 Lista toca un supermercado (1 al 4) y luego “✏️ Cambiar nombre” para ponerle el nombre que quieras. Para colorear un producto toca su cuadrito una, dos, tres o cuatro veces: cada toque lo pinta del color del supermercado 1, 2, 3 o 4. Un toque más lo deja sin color.'],
+['4. Escribe lo que necesitas','En 📝 Lista toca “+ Renglón” y escribe el producto. O toca el 🎤 de arriba y di solo el producto, por ejemplo “leche”, y lo agrega a la lista.'],
+['5. Habla con palabras clave','Hay un solo 🎤, arriba, para todo. Para cambiar de pestaña di: LISTA, INVENTARIO, SE ACABAN o AYUDA. Para el inventario di el producto con: INICIO (lo que tenías), COMPRAS o “compré” (lo que compraste) y USO o “gasté” (lo que gastaste). Ejemplo: “Atún, compré 3 latas, inicio 1, gasté 2”.'],
+['6. Mira lo de cada supermercado','Arriba toca el supermercado que quieras y verás solo lo que debes comprar ahí.'],
+['7. Lleva tu inventario','En 📦 Inventario puedes escribir los números a mano, o tocar el 🎤 de arriba y decir el producto con las palabras clave: la app lo busca y llena Inicio, Compras y Usado. El Inventario final lo calcula solo.'],
+['8. Mira lo que se acaba','En ⚠️ Se acaban salen los productos que se están terminando.'],
+['9. Pasar a Excel','En 📦 Inventario toca “Copiar para Excel” y pega en Excel.'],
+['10. Entra a la página web','Entra a la página web para cualquier pregunta, para cualquier inquietud y conoce nuestras otras apps. Toca este enlace: <a href="https://sites.google.com/view/ed-apps/p%C3%A1gina-principal" target="_blank" rel="noopener" style="word-break:break-all">sites.google.com/view/ed-apps</a>']];
+  return '<div class="msg">Así se usa, paso a paso:</div>'+P.map(p=>`<div style="background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0"><b style="font-size:1.02rem">${p[0]}</b><div style="margin-top:4px;line-height:1.45">${p[1]}</div></div>`).join('')+'<a class="btn" href="https://sites.google.com/view/ed-apps/p%C3%A1gina-principal" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:14px 0">🌐 Visite nuestra página</a>';
+}
+function addIt(a){const x=mk('');x.s=S.f>=0?S.f:-1;C[a].i.push(x);save();render()}
+function cyc(a,b){const x=C[a].i[b];x.s=x.s>=ST.length-1?-1:x.s+1;save();render()}
+function clearDone(){C.forEach(c=>c.i=c.i.filter(x=>!x.c));save();render()}
+function up(a,b,f,v){
+  const x=C[a].i[b];
+  if(f==='dur'||f==='s')v=Number(v)||(f==='s'?-1:0);
+  if(f==='buy'&&Number(v)>0)x.date=Date.now();
+  x[f]=v;
+  if(f==='ini'&&Number(v)>0)x.date=Date.now();
+  save();render();
+}
+const NUM={un:1,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,doce:12,quince:15,veinte:20,treinta:30,cero:0,once:11,trece:13,catorce:14,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinticinco:25,cuarenta:40,cincuenta:50,cien:100,medio:0.5,media:0.5};
+function listen(cb){
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition,m=$('vm');
+  if(!R){m.textContent='Este navegador no permite voz. Prueba en Chrome o desde el celular.';return}
+  try{
+    const r=new R();r.lang='es-CO';r.interimResults=false;
+    r.onstart=()=>{m.textContent='🎙️ Escuchando…'};
+    r.onresult=e=>cb(e.results[0][0].transcript.toLowerCase());
+    r.onerror=e=>{m.textContent='No pude usar el micrófono ('+e.error+'). Revisa el permiso.'};
+    r.start();
+  }catch(e){m.textContent='No pude iniciar el micrófono.'}
+}
+function parse(t){
+  t=t.replace(/(^|\s)[.,](\d)/g,(m,a,d)=>a+'0.'+d);
+  t=t.replace(/\b[a-zñ]+\b/g,w=>NUM.hasOwnProperty(w)?NUM[w]:w);
+  t=t.replace(/(\d+)\s+y\s+0\.5(?!\d)/g,(m,n)=>(+n+0.5));
+  t=t.replace(/(\d+)\s*(?:punto|coma)\s*(\d+)/g,(m,i,d)=>i+'.'+d);
+  t=t.replace(/(^|\s)(?:punto|coma)\s*(\d+)/g,(m,a,d)=>a+'0.'+d);
+  t=t.replace(/(\d+(?:\.\d+)?)\s+cuartos?\b/g,(m,n)=>String(n*0.25));
+  let dur=0;const vals={};
+  t=t.replace(/(\d+(?:[.,]\d+)?)\s*(d[ií]as?|semanas?|mes(?:es)?)/,(a,n,u)=>{n=parseFloat(n.replace(',','.'));dur=Math.round(n*(/^d/.test(u)?1:/^s/.test(u)?7:30));return ' '});
+  t=t.replace(/\b(que\s+)?(dura|duran|durará)\b/g,' ');
+  t=t.replace(/(?<!\d)[.,;:!?¡¿]|[.,;:!?¡¿](?!\d)/g,' ');
+  const B='(?<![a-zñáéíóú])',E='(?![a-zñáéíóú])';
+  const KW='(inicio|inicial|tengo|tenemos|ten[ií]a|compr(?:é|e|ó|o|a|as|amos|aron|aste|ado|ados|adas|ar)|us(?:é|e|ó|o|a|as|amos|aron|aste|ado|ados|ar)|gast(?:é|e|ó|o|a|amos|aron|ado|ados|ar)|consum(?:í|i|ió|o|imos|ido))';
+  const kindOf=w=>/^(inicio|inicial|tengo|tenemos|ten)/.test(w)?'ini':/^compr/.test(w)?'buy':'use';
+  t=t.replace(new RegExp(B+KW+E+'\\s*(?:de\\s+)?(\\d+(?:[.,]\\d+)?)','g'),(a,w,n)=>{vals[kindOf(w)]=parseFloat(n.replace(',','.'));return ' '});
+  if(!Object.keys(vals).length){
+    const m=t.match(new RegExp(B+KW+E));
+    const kind=m?kindOf(m[1]):'ini';
+    t=t.replace(/\d+(?:[.,]\d+)?/,a=>{vals[kind]=parseFloat(a.replace(',','.'));return ' '});
+  }
+  t=t.replace(new RegExp(B+KW+E,'g'),' ');
+  const U='kilos?|libras?|unidades?|paquetes?|litros?|botellas?|bolsas?|latas?';
+  const name=t.replace(new RegExp('\\b('+U+')\\s+de\\b','g'),' ').replace(new RegExp('\\b('+U+'|unos|unas)\\b','g'),' ').replace(/\s+/g,' ').trim().replace(/^(de|del)\s+/,'');
+  const k=Object.keys(vals);
+  return{name,vals,dur,q:k.length?vals[k[0]]:'',kind:k[0]||'ini'};
+}
+const LBL={ini:'inicio',buy:'compras',use:'usado'};
+function micAll(){listen(t=>{
+  const w=t.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const p=parse(t);
+  const keys=Object.keys(p.vals);
+  const tabs={lista:'Lista',inv:'Inventario',al:'Se acaban',ay:'Ayuda'};
+  // 1) Cambiar de pestaña: solo si dice la palabra y no hay números
+  if(!keys.length&&!/\d/.test(w)){
+    const m=/inventario/.test(w)?'inv':/acaba|revisar|agota|terminan/.test(w)?'al':/ayuda/.test(w)?'ay':/\blista\b/.test(w)?'lista':'';
+    if(m&&w.trim().split(/\s+/).length<=4){S.tab=m;render();$('vm').textContent='Abrí: '+tabs[m];return}
+  }
+  if(!p.name){$('vm').textContent='Escuché “'+t+'” pero no entendí. Di un producto o: lista, inventario, se acaban, ayuda.';return}
+  const nm=x=>x.toLowerCase().trim().replace(/s$/,'');
+  const n0=nm(p.name);let fa=-1,fb=-1;
+  C.forEach((c,a)=>c.i.forEach((x,b)=>{if(fa<0&&x.t&&nm(x.t)===n0){fa=a;fb=b}}));
+  if(fa<0)C.forEach((c,a)=>c.i.forEach((x,b)=>{if(fa<0&&x.t){const m=nm(x.t);if(m.includes(n0)||n0.includes(m)){fa=a;fb=b}}}));
+  const desc=keys.map(k=>LBL[k]+' '+p.vals[k]).join(' · ');
+  // 2) Con inicio / compré / usé: actualizar inventario
+  if(keys.length){
+    let x,where='';
+    if(fa>=0){x=C[fa].i[fb]}
+    else{
+      let ci=C.findIndex(c=>/despensa/i.test(c.n));if(ci<0)ci=C.length-1;
+      x=mk(p.name.charAt(0).toUpperCase()+p.name.slice(1));x.s=S.f>=0?S.f:-1;
+      C[ci].i.push(x);where=' (nuevo en '+C[ci].n+')';
+    }
+    keys.forEach(k=>{x[k]=k==='ini'?p.vals[k]:Math.round(((+x[k]||0)+p.vals[k])*100)/100});
+    if(p.vals.ini>0||p.vals.buy>0)x.date=Date.now();
+    if(p.dur)x.dur=p.dur;
+    S.tab='inv';save();render();
+    $('vm').textContent='Anoté en '+x.t+where+': '+desc;
+    return;
+  }
+  // 3) Solo un producto: agregarlo a la lista
+  if(fa>=0){$('vm').textContent=C[fa].i[fb].t+' ya está en la lista ('+C[fa].n+').';return}
+  let ci=C.findIndex(c=>/despensa/i.test(c.n));if(ci<0)ci=C.length-1;
+  const x=mk(p.name.charAt(0).toUpperCase()+p.name.slice(1));x.s=S.f>=0?S.f:-1;x.dur=p.dur;
+  C[ci].i.push(x);S.tab='lista';save();render();
+  $('vm').textContent='Agregué a la lista: '+x.t+' ('+C[ci].n+')';
+})}
+function copyTable(){
+  const L=['Categoría\tProducto\tInicio\tDuración (días)\tCompras\tUsado\tInventario final\tLugar\tEstado'];
+  C.forEach(c=>c.i.forEach(x=>{if(x.t)L.push([c.n,x.t,x.ini,x.dur||'',x.buy,x.use||'',calc(x),x.s>=0?ST[x.s]:'',status(x).t].join('\t'))}));
+  const t=L.join('\n');
+  try{navigator.clipboard.writeText(t).then(cok,()=>fb(t))}catch(e){fb(t)}
+}
+const TEMAS=[['lila','Lila','#b98ad6'],['rosa','Rosado claro','#cc5f8f'],['bn','Blanco y negro','#111'],['aqua','Verde aqua','#2f9c89'],['celeste','Celeste','#3b8fc9']];
+let TM='lila';
+try{TM=localStorage.getItem(KEY+'.tema')||'lila'}catch(e){}
+function sw(){$('sw').innerHTML='<span class="msg" style="margin:0">🎨 Color:</span>'+TEMAS.map(t=>`<button title="${t[1]}" aria-label="${t[1]}" onclick="setTema('${t[0]}')" style="width:28px;height:28px;border-radius:50%;background:${t[2]};border:3px solid ${TM===t[0]?'var(--tx)':'transparent'};cursor:pointer;padding:0"></button>`).join('')}
+function setTema(t){TM=t;try{localStorage.setItem(KEY+'.tema',t)}catch(e){}document.documentElement.setAttribute('data-tema',t);sw()}
+setTema(TM);
+function cok(){$('vm').textContent='¡Copiado! Pégalo en Excel'}
+function fb(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');cok()}catch(e){$('vm').textContent='No se pudo copiar'}a.remove()}
+render();
+</script>
+</body>
+</html>
